@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart — Lumiere Cosmetics</title>
+  <meta name="description" content="Your shopping cart at Lumiere Cosmetics.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/premium.css">
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="topbar">Premium Beauty & Fragrance — Free delivery on orders over 200,000 so'm</div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Lumiere <span>Cosmetics</span></a>
+      <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="brands.html">Brands</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-btn" href="wishlist.html" aria-label="Wishlist">&#9825;<span class="wishlist-count" style="position:absolute;top:-6px;right:-8px;background:var(--black);color:var(--white);font-size:10px;font-weight:600;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">0</span></a>
+        <button class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">&#127769;</button>
+        <a class="icon-btn" href="cart.html" aria-label="Cart">&#128722;<span class="cart-count">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Your Cart</h1>
+      <p class="kicker">Review and checkout</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div id="cartArea"></div>
+    </div>
+  </section>
+
+  <div id="checkoutSection" style="display:none">
+    <section class="section" style="background:var(--off-white)">
+      <div class="container">
+        <div style="max-width:720px;margin:0 auto">
+          <div class="section-head">
+            <p class="kicker">Checkout</p>
+            <h2>Delivery Details</h2>
+          </div>
+          <form id="checkoutForm" class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" required placeholder="Your name">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" required placeholder="+998 90 000 00 00">
+            </div>
+            <div class="form-group full">
+              <label for="address">Address</label>
+              <input type="text" id="address" required placeholder="Street, city">
+            </div>
+            <div class="form-group full">
+              <label for="notes">Order Notes (optional)</label>
+              <textarea id="notes" rows="3" placeholder="Anything we should know?"></textarea>
+            </div>
+            <div class="form-group full">
+              <button type="submit" class="btn btn-lg btn-block">Place Order</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">Lumiere Cosmetics</div>
+          <p>Premium beauty, skincare and fragrance curating the world's finest brands.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?category=Fragrance">Fragrance</a></li>
+            <li><a href="shop.html?category=Skincare">Skincare</a></li>
+            <li><a href="shop.html?category=Makeup">Makeup</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="shop.html">Best Sellers</a></li>
+            <li><a href="cart.html">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="contact.html">Tashkent, Uzbekistan</a></li>
+            <li><a href="mailto:hello@lumiere-cosmetics.com">hello@lumiere-cosmetics.com</a></li>
+            <li><a href="tel:+998900000000">+998 90 000 00 00</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Lumiere Cosmetics. All rights reserved.</span>
+        <span>Demo store — frontend only</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/products-full.js"></script>
+  <script src="js/app.js"></script>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+  <script>
+    var cartArea = document.getElementById('cartArea');
+    var checkoutSection = document.getElementById('checkoutSection');
+    var appliedCoupon = null;
+
+    function renderCart() {
+      var cart = getCart();
+      if (cart.length === 0) {
+        cartArea.innerHTML = '<div class="empty-state"><h3>Your cart is empty</h3><p>Explore our collection and find something you will love.</p><a href="shop.html" class="btn">Continue Shopping</a></div>';
+        checkoutSection.style.display = 'none';
+        return;
+      }
+
+      var items = cart.map(function(i) {
+        var p = findProduct(i.id);
+        if (!p) return null;
+        var itemPrice = p.price;
+        var variantLabel = '';
+        if (i.variant && p.variants) {
+          var v = p.variants.find(function(v) { return v.label === i.variant; });
+          if (v) { itemPrice = v.price; variantLabel = v.label; }
+        }
+        return { p: p, qty: i.qty, key: i.key, itemPrice: itemPrice, variant: variantLabel };
+      }).filter(Boolean);
+
+      var subtotal = items.reduce(function(s, it) { return s + (it.itemPrice * it.qty); }, 0);
+      var discount = 0;
+      if (appliedCoupon) {
+        if (appliedCoupon.type === 'percent') {
+          discount = Math.round(subtotal * appliedCoupon.value / 100);
+        } else {
+          discount = appliedCoupon.value;
+        }
+      }
+      var total = Math.max(0, subtotal - discount);
+
+      cartArea.innerHTML = '<div class="cart-layout"><div>' +
+        items.map(function(it) {
+          return '<div class="cart-item"><a class="thumb" href="product.html?id=' + it.p.id + '"><img src="' + it.p.image + '" alt="' + it.p.name + '"></a><div><p class="cart-brand">' + it.p.brand + '</p><h4><a href="product.html?id=' + it.p.id + '">' + it.p.name + '</a></h4>' + (it.variant ? '<p style="font-size:12px;color:var(--muted);margin-top:2px">' + it.variant + '</p>' : '') + '<p class="price">' + formatPrice(it.itemPrice) + '</p><div class="line"><div class="qty-row"><button data-desc="' + it.key + '" aria-label="Decrease">&minus;</button><span class="qty">' + it.qty + '</span><button data-inc="' + it.key + '" aria-label="Increase">+</button></div><button class="remove" data-del="' + it.key + '">Remove</button></div></div><p class="price">' + formatPrice(it.itemPrice * it.qty) + '</p></div>';
+        }).join('') +
+        '</div><div class="summary"><h3>Order Summary</h3>' +
+        '<div class="row"><span>Subtotal</span><span>' + formatPrice(subtotal) + '</span></div>' +
+        '<div class="row"><span>Delivery</span><span>Free</span></div>' +
+        (discount > 0 ? '<div class="row discount-row"><span>Discount (' + appliedCoupon.desc + ')</span><span>-' + formatPrice(discount) + '</span></div>' : '') +
+        '<div class="coupon-row"><input type="text" id="couponInput" placeholder="Coupon code" value="' + (appliedCoupon ? appliedCoupon.code : '') + '"><button class="btn btn-sm" id="applyCoupon">Apply</button></div>' +
+        '<div id="couponMsg" class="coupon-msg"></div>' +
+        '<div class="trust-badges"><div class="trust-badge"><span class="t-icon">&#128666;</span>Free Ship</div><div class="trust-badge"><span class="t-icon">&#128274;</span>Secure Pay</div><div class="trust-badge"><span class="t-icon">&#8635;</span>14-Day Returns</div><div class="trust-badge"><span class="t-icon">&#10003;</span>100% Authentic</div></div>' +
+        '<div class="row total"><span>Total</span><span>' + formatPrice(total) + '</span></div>' +
+        '<button class="btn btn-block mt-2" id="goCheckout">Checkout</button></div></div>';
+
+      checkoutSection.style.display = 'none';
+
+      document.getElementById('goCheckout').addEventListener('click', function() {
+        checkoutSection.style.display = 'block';
+        checkoutSection.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      document.getElementById('applyCoupon').addEventListener('click', function() {
+        var code = document.getElementById('couponInput').value.trim();
+        if (!code) return;
+        var result = applyCoupon(code);
+        var msgEl = document.getElementById('couponMsg');
+        if (result.ok) {
+          appliedCoupon = result.discount;
+          appliedCoupon.code = code;
+          msgEl.className = 'coupon-msg success';
+          msgEl.textContent = 'Coupon applied: ' + result.discount.desc;
+          renderCart();
+        } else {
+          msgEl.className = 'coupon-msg error';
+          msgEl.textContent = result.msg;
+        }
+      });
+    }
+
+    cartArea.addEventListener('click', function(e) {
+      var inc = e.target.closest('[data-inc]');
+      var desc = e.target.closest('[data-desc]');
+      var del = e.target.closest('[data-del]');
+      if (inc) {
+        var it = getCart().find(function(i) { return i.key === inc.dataset.inc; });
+        if (it) setCartQty(inc.dataset.inc, it.qty + 1);
+      } else if (desc) {
+        var it2 = getCart().find(function(i) { return i.key === desc.dataset.desc; });
+        if (it2) setCartQty(desc.dataset.desc, it2.qty - 1);
+      } else if (del) {
+        removeFromCart(del.dataset.del);
+      }
+      renderCart();
+    });
+
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearCart();
+      appliedCoupon = null;
+      cartArea.innerHTML = '<div class="success-box"><h2>Order Placed!</h2><p class="muted mb-2">We will contact you shortly to confirm your order.</p><a href="shop.html" class="btn">Continue Shopping</a></div>';
+      checkoutSection.style.display = 'none';
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>

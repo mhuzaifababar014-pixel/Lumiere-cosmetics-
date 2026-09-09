@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Lumiere Cosmetics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/premium.css">
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="topbar">Premium Beauty & Fragrance — Free delivery on orders over 200,000 so'm</div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Lumiere <span>Cosmetics</span></a>
+      <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html" class="active">Shop</a></li>
+          <li><a href="brands.html">Brands</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-btn" href="wishlist.html" aria-label="Wishlist">&#9825;<span class="wishlist-count" style="position:absolute;top:-6px;right:-8px;background:var(--black);color:var(--white);font-size:10px;font-weight:600;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">0</span></a>
+        <button class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">&#127769;</button>
+        <a class="icon-btn" href="cart.html" aria-label="Cart">&#128722;<span class="cart-count">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <div id="breadcrumbArea"></div>
+
+  <section class="section" style="padding-top:30px">
+    <div class="container">
+      <div class="product-layout" id="product"></div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--off-white)">
+    <div class="container">
+      <div class="section-head">
+        <p class="kicker">You may also like</p>
+        <h2>Related Products</h2>
+      </div>
+      <div class="product-grid" id="related"></div>
+    </div>
+  </section>
+
+  <section class="section reviews-section">
+    <div class="container">
+      <h2>Customer Reviews</h2>
+      <div id="reviewList"></div>
+      <div class="review-form" id="reviewForm">
+        <h3>Write a Review</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="reviewName">Your Name</label>
+            <input type="text" id="reviewName" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label>Rating</label>
+            <div class="star-rating-input" id="starInput">
+              <span data-star="1">&#9733;</span>
+              <span data-star="2">&#9733;</span>
+              <span data-star="3">&#9733;</span>
+              <span data-star="4">&#9733;</span>
+              <span data-star="5">&#9733;</span>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="reviewText">Your Review</label>
+            <textarea id="reviewText" rows="3" required placeholder="Share your experience..."></textarea>
+          </div>
+          <div class="form-group full">
+            <button class="btn" id="submitReview">Submit Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">Lumiere Cosmetics</div>
+          <p>Premium beauty, skincare and fragrance curating the world's finest brands.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?category=Fragrance">Fragrance</a></li>
+            <li><a href="shop.html?category=Skincare">Skincare</a></li>
+            <li><a href="shop.html?category=Makeup">Makeup</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="shop.html">Best Sellers</a></li>
+            <li><a href="cart.html">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="contact.html">Tashkent, Uzbekistan</a></li>
+            <li><a href="mailto:hello@lumiere-cosmetics.com">hello@lumiere-cosmetics.com</a></li>
+            <li><a href="tel:+998900000000">+998 90 000 00 00</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Lumiere Cosmetics. All rights reserved.</span>
+        <span>Demo store — frontend only</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/products-full.js"></script>
+  <script src="js/app.js"></script>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+  <script>
+    var qty = 1;
+    var selectedVariant = null;
+    var params = new URLSearchParams(location.search);
+    var product = findProduct(params.get('id')) || PRODUCTS[0];
+
+    renderBreadcrumbs(document.getElementById('breadcrumbArea'), [
+      { label: 'Home', href: 'index.html' },
+      { label: 'Shop', href: 'shop.html' },
+      { label: product.category, href: 'shop.html?category=' + encodeURIComponent(product.category) },
+      { label: product.name }
+    ]);
+
+    function getActivePrice() {
+      if (selectedVariant && product.variants) {
+        var v = product.variants.find(function(v) { return v.label === selectedVariant; });
+        if (v) return v.price;
+      }
+      return product.price;
+    }
+
+    function getActiveStock() {
+      if (selectedVariant && product.variants) {
+        var v = product.variants.find(function(v) { return v.label === selectedVariant; });
+        if (v) return v.stock;
+      }
+      return product.stock;
+    }
+
+    function getActivePriceText() {
+      return formatPrice(getActivePrice());
+    }
+
+    function renderProduct() {
+      var stock = getActiveStock();
+      var stockClass = stock > 10 ? 'in-stock' : stock > 0 ? 'low-stock' : 'out-of-stock';
+      var stockText = stock > 10 ? 'In Stock' : stock > 0 ? 'Only ' + stock + ' left' : 'Out of Stock';
+      var avgRating = getAvgRating(product.id);
+      var totalReviews = (product.reviews ? product.reviews.length : 0) + (product.reviewCount || 0);
+
+      var variantHtml = '';
+      if (product.variants && product.variants.length > 1) {
+        variantHtml = '<div class="variant-group"><label>Size / Variant</label><div class="variant-options">';
+        product.variants.forEach(function(v) {
+          var active = v.label === selectedVariant;
+          var disabled = v.stock <= 0;
+          variantHtml += '<button class="variant-btn' + (active ? ' active' : '') + (disabled ? ' disabled' : '') + '" data-variant="' + v.label + '"' + (disabled ? ' disabled' : '') + '>' + v.label + ' — ' + formatPrice(v.price) + '</button>';
+        });
+        variantHtml += '</div></div>';
+      }
+
+      var wishlisted = isWishlisted(product.id);
+
+      var container = document.getElementById('product');
+      container.innerHTML =
+        '<div class="product-gallery">' +
+          '<img src="' + product.image + '" alt="' + product.name + '">' +
+        '</div>' +
+        '<div class="product-info">' +
+          '<p class="product-brand">' + product.brand + ' — ' + product.category + '</p>' +
+          '<h1>' + product.name + '</h1>' +
+          '<p class="latin">' + (product.latin || '') + '</p>' +
+          '<div class="rating-summary"><span class="stars">' + renderStars(avgRating) + '</span><span class="count">' + avgRating.toFixed(1) + ' (' + totalReviews + ' reviews)</span></div>' +
+          '<p class="big-price" id="priceDisplay">' + getActivePriceText() + '</p>' +
+          '<div class="stock-badge ' + stockClass + '">' + stockText + '</div>' +
+          variantHtml +
+          '<div style="display:flex;gap:12px;align-items:center;margin:16px 0 10px">' +
+            '<div class="qty-row"><button id="qtyMinus" aria-label="Decrease">&minus;</button><span class="qty" id="qtyDisplay">1</span><button id="qtyPlus" aria-label="Increase">+</button></div>' +
+            '<button class="btn btn-lg" id="addBtn"' + (stock <= 0 ? ' disabled style="opacity:.5;cursor:not-allowed"' : '') + '>Add to Cart</button>' +
+            '<button class="wishlist-btn' + (wishlisted ? ' active' : '') + '" data-wishlist="' + product.id + '" style="position:static;opacity:1;transform:none;box-shadow:none;width:46px;height:46px;flex-shrink:0">' + (wishlisted ? '&#9829;' : '&#9825;') + '</button>' +
+          '</div>' +
+          '<button class="btn btn-outline btn-sm" data-compare="' + product.id + '">+ Compare</button>' +
+          '<div class="desc-block"><h3>Description</h3><p>' + (product.description || 'No description available.') + '</p></div>' +
+          (product.descUr ? '<div class="desc-block"><h3>Urdu Description</h3><p style="direction:rtl;text-align:right">' + product.descUr + '</p></div>' : '') +
+        '</div>';
+
+      document.querySelectorAll('.variant-btn:not(.disabled)').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          selectedVariant = btn.getAttribute('data-variant');
+          qty = 1;
+          renderProduct();
+        });
+      });
+
+      document.getElementById('qtyPlus').addEventListener('click', function() {
+        if (qty < getActiveStock()) { qty++; document.getElementById('qtyDisplay').textContent = qty; }
+      });
+      document.getElementById('qtyMinus').addEventListener('click', function() {
+        if (qty > 1) { qty--; document.getElementById('qtyDisplay').textContent = qty; }
+      });
+      document.getElementById('addBtn').addEventListener('click', function() {
+        if (getActiveStock() <= 0) return;
+        addToCart(product.id, qty, selectedVariant);
+        toastFn('Added to cart');
+      });
+    }
+
+    renderProduct();
+
+    function renderReviews() {
+      var reviews = getReviews(product.id);
+      var container = document.getElementById('reviewList');
+      if (reviews.length === 0) {
+        container.innerHTML = '<p class="muted">No reviews yet. Be the first to review!</p>';
+        return;
+      }
+      container.innerHTML = reviews.map(function(r) {
+        return '<div class="review-card fade-in-up"><div class="review-header"><span class="review-user">' + r.user + '</span><span class="stars" style="font-size:13px">' + renderStars(r.rating, 13) + '</span><span class="review-date">' + r.date + '</span></div><p class="review-text">' + r.text + '</p></div>';
+      }).join('');
+      initFadeAnimations();
+    }
+
+    renderReviews();
+
+    var selectedRating = 0;
+    document.getElementById('starInput').addEventListener('click', function(e) {
+      var star = e.target.closest('[data-star]');
+      if (star) {
+        selectedRating = parseInt(star.getAttribute('data-star'));
+        document.querySelectorAll('#starInput span').forEach(function(s, i) {
+          s.classList.toggle('active', i < selectedRating);
+        });
+      }
+    });
+
+    document.getElementById('submitReview').addEventListener('click', function(e) {
+      e.preventDefault();
+      var name = document.getElementById('reviewName').value.trim();
+      var text = document.getElementById('reviewText').value.trim();
+      if (!name || !text || !selectedRating) {
+        toastFn('Please fill all fields and select a rating');
+        return;
+      }
+      addReview(product.id, name, selectedRating, text);
+      document.getElementById('reviewName').value = '';
+      document.getElementById('reviewText').value = '';
+      selectedRating = 0;
+      document.querySelectorAll('#starInput span').forEach(function(s) { s.classList.remove('active'); });
+      renderReviews();
+      toastFn('Review submitted!');
+    });
+
+    renderRelated(document.getElementById('related'), product, 4);
+    document.title = product.name + ' — Lumiere Cosmetics';
+
+    var ld = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "image": product.image,
+      "description": product.description,
+      "brand": { "@type": "Brand", "name": product.brand },
+      "offers": { "@type": "Offer", "price": product.price, "priceCurrency": "UZS", "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": product.rating, "reviewCount": product.reviewCount || 0 }
+    };
+    var ldScript = document.createElement('script');
+    ldScript.type = 'application/ld+json';
+    ldScript.textContent = JSON.stringify(ld);
+    document.head.appendChild(ldScript);
+  </script>
+</body>
+</html>

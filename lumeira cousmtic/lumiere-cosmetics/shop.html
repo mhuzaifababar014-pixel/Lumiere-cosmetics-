@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Lumiere Cosmetics</title>
+  <meta name="description" content="Browse our premium collection of skincare, makeup and fragrance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/premium.css">
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="topbar">Premium Beauty & Fragrance — Free delivery on orders over 200,000 so'm</div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Lumiere <span>Cosmetics</span></a>
+      <button class="menu-toggle" aria-label="Menu">&#9776;</button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html" class="active">Shop</a></li>
+          <li><a href="brands.html">Brands</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-btn" href="wishlist.html" aria-label="Wishlist">&#9825;<span class="wishlist-count" style="position:absolute;top:-6px;right:-8px;background:var(--black);color:var(--white);font-size:10px;font-weight:600;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;">0</span></a>
+        <button class="theme-btn" data-theme-toggle aria-label="Toggle dark mode">&#127769;</button>
+        <a class="icon-btn" href="cart.html" aria-label="Cart">&#128722;<span class="cart-count">0</span></a>
+      </div>
+    </div>
+  </header>
+
+  <div id="breadcrumbArea"></div>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Shop All Products</h1>
+      <p class="kicker">Explore the full collection</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="shop-controls">
+        <div class="filters" id="filters">
+          <button class="filter-btn active" data-cat="">All</button>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <div class="search-wrap">
+            <div class="search-box">
+              <span style="color:var(--muted)">&#128269;</span>
+              <input type="text" id="search" placeholder="Search products, brands...">
+            </div>
+            <div class="search-dropdown" id="searchDropdown"></div>
+          </div>
+          <select class="sort-select" id="sort">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name">Name: A-Z</option>
+          </select>
+        </div>
+      </div>
+      <div class="shop-controls" style="justify-content:space-between">
+        <p class="results-info" id="resultsInfo" style="margin:0"></p>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <div class="price-range">
+            <span class="price-range-label" id="priceLabel">All prices</span>
+            <input type="range" id="priceRange" min="0" max="500000" step="5000" value="500000">
+          </div>
+          <select class="sort-select" id="brandSelect" style="min-width:200px">
+            <option value="">All Brands</option>
+          </select>
+        </div>
+      </div>
+      <div class="product-grid" id="grid"></div>
+      <div class="text-center mt-2" id="pagination" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"></div>
+    </div>
+  </section>
+
+  <div class="compare-bar">
+    <div class="compare-items"></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-sm" onclick="location.href='compare.html'" style="background:#fff;color:#111;border-color:#fff">Compare Now</button>
+      <button class="btn btn-sm" onclick="localStorage.removeItem('lumiere_compare');updateCompareBar();" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Clear</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">Lumiere Cosmetics</div>
+          <p>Premium beauty, skincare and fragrance curating the world's finest brands.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All Products</a></li>
+            <li><a href="shop.html?category=Fragrance">Fragrance</a></li>
+            <li><a href="shop.html?category=Skincare">Skincare</a></li>
+            <li><a href="shop.html?category=Makeup">Makeup</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="brands.html">Brands</a></li>
+            <li><a href="shop.html">Best Sellers</a></li>
+            <li><a href="cart.html">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="contact.html">Tashkent, Uzbekistan</a></li>
+            <li><a href="mailto:hello@lumiere-cosmetics.com">hello@lumiere-cosmetics.com</a></li>
+            <li><a href="tel:+998900000000">+998 90 000 00 00</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Lumiere Cosmetics. All rights reserved.</span>
+        <span>Demo store — frontend only</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/products-full.js"></script>
+  <script src="js/app.js"></script>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+  <script>
+    var params = new URLSearchParams(location.search);
+    var PAGE_SIZE = 60;
+
+    var state = {
+      category: params.get('category') || '',
+      brand: params.get('brand') || '',
+      search: '',
+      sort: 'featured',
+      page: 1,
+      maxPrice: 500000
+    };
+
+    var breadcrumbItems = [{ label: 'Home', href: 'index.html' }, { label: 'Shop' }];
+    if (state.category) breadcrumbItems.push({ label: state.category });
+    if (state.brand) breadcrumbItems.push({ label: state.brand });
+    renderBreadcrumbs(document.getElementById('breadcrumbArea'), breadcrumbItems);
+
+    var filterWrap = document.getElementById('filters');
+    var brandSelect = document.getElementById('brandSelect');
+    var grid = document.getElementById('grid');
+    var resultsInfo = document.getElementById('resultsInfo');
+    var pagination = document.getElementById('pagination');
+    var priceRange = document.getElementById('priceRange');
+    var priceLabel = document.getElementById('priceLabel');
+    var searchDropdown = document.getElementById('searchDropdown');
+
+    var maxPrice = 0;
+    FULL_PRODUCTS.forEach(function(p) { if (p.price > maxPrice) maxPrice = p.price; });
+    priceRange.max = maxPrice;
+    priceRange.value = maxPrice;
+
+    var catCounts = {};
+    FULL_PRODUCTS.forEach(function(p) { catCounts[p.category] = (catCounts[p.category] || 0) + 1; });
+    var cats = Object.keys(catCounts).sort();
+    cats.forEach(function(c) {
+      var b = document.createElement('button');
+      b.className = 'filter-btn';
+      b.textContent = c + ' (' + catCounts[c] + ')';
+      b.dataset.cat = c;
+      filterWrap.appendChild(b);
+    });
+
+    var brandSet = {};
+    FULL_PRODUCTS.forEach(function(p) { if (p.brand) brandSet[p.brand] = true; });
+    Object.keys(brandSet).sort().forEach(function(b) {
+      var o = document.createElement('option');
+      o.value = b;
+      o.textContent = b;
+      brandSelect.appendChild(o);
+    });
+
+    if (state.category) {
+      filterWrap.querySelectorAll('.filter-btn').forEach(function(b) {
+        if (b.dataset.cat === state.category) {
+          filterWrap.querySelectorAll('.filter-btn').forEach(function(x) { x.classList.remove('active'); });
+          b.classList.add('active');
+        }
+      });
+    }
+
+    function filteredList() {
+      var list = FULL_PRODUCTS.slice();
+      if (state.category) list = list.filter(function(p) { return p.category === state.category; });
+      if (state.brand) list = list.filter(function(p) { return p.brand === state.brand; });
+      if (state.search) {
+        var q = state.search.toLowerCase();
+        list = list.filter(function(p) { return (p.name + ' ' + p.brand + ' ' + p.category).toLowerCase().indexOf(q) !== -1; });
+      }
+      list = list.filter(function(p) { return p.price <= state.maxPrice; });
+      if (state.sort === 'price-asc') list.sort(function(a, b) { return a.price - b.price; });
+      else if (state.sort === 'price-desc') list.sort(function(a, b) { return b.price - a.price; });
+      else if (state.sort === 'name') list.sort(function(a, b) { return a.name.localeCompare(b.name); });
+      return list;
+    }
+
+    function applyFilters() {
+      var list = filteredList();
+      var totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+      if (state.page > totalPages) state.page = totalPages;
+      if (state.page < 1) state.page = 1;
+      var start = (state.page - 1) * PAGE_SIZE;
+      var pageItems = list.slice(start, start + PAGE_SIZE);
+
+      renderProducts(grid, pageItems);
+      resultsInfo.textContent = list.length + ' products';
+      brandSelect.value = state.brand;
+
+      var pagHtml = '';
+      var maxButtons = 9;
+      var from = Math.max(1, state.page - 4);
+      var to = Math.min(totalPages, from + maxButtons - 1);
+      from = Math.max(1, to - maxButtons + 1);
+      if (state.page > 1) pagHtml += '<button class="filter-btn" data-page="' + (state.page - 1) + '">&lsaquo; Prev</button>';
+      for (var i = from; i <= to; i++) {
+        pagHtml += '<button class="filter-btn' + (i === state.page ? ' active' : '') + '" data-page="' + i + '">' + i + '</button>';
+      }
+      if (state.page < totalPages) pagHtml += '<button class="filter-btn" data-page="' + (state.page + 1) + '">Next &rsaquo;</button>';
+      pagination.innerHTML = pagHtml;
+      pagination.style.display = totalPages > 1 ? 'flex' : 'none';
+    }
+
+    filterWrap.addEventListener('click', function(e) {
+      if (!e.target.classList.contains('filter-btn')) return;
+      filterWrap.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      e.target.classList.add('active');
+      state.category = e.target.dataset.cat;
+      state.brand = '';
+      state.page = 1;
+      applyFilters();
+    });
+
+    brandSelect.addEventListener('change', function(e) {
+      state.brand = e.target.value;
+      state.page = 1;
+      applyFilters();
+    });
+
+    var searchTimer;
+    document.getElementById('search').addEventListener('input', function(e) {
+      clearTimeout(searchTimer);
+      var val = e.target.value;
+      searchTimer = setTimeout(function() {
+        state.search = val;
+        state.page = 1;
+        applyFilters();
+        updateSearchDropdown(val);
+      }, 250);
+    });
+
+    document.getElementById('search').addEventListener('focus', function() {
+      if (this.value.trim()) updateSearchDropdown(this.value);
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-wrap')) searchDropdown.classList.remove('open');
+    });
+
+    function updateSearchDropdown(query) {
+      if (!query || !query.trim()) { searchDropdown.classList.remove('open'); return; }
+      var q = query.toLowerCase();
+      var matches = FULL_PRODUCTS.filter(function(p) {
+        return (p.name + ' ' + p.brand + ' ' + p.category).toLowerCase().indexOf(q) !== -1;
+      }).slice(0, 6);
+      if (matches.length === 0) { searchDropdown.classList.remove('open'); return; }
+      searchDropdown.innerHTML = matches.map(function(p) {
+        return '<a class="search-dropdown-item" href="product.html?id=' + p.id + '"><img src="' + p.image + '" alt="' + p.name + '"><div><strong>' + p.name + '</strong><br><small style="color:var(--muted)">' + p.brand + ' — ' + p.priceText + '</small></div></a>';
+      }).join('');
+      searchDropdown.classList.add('open');
+    }
+
+    document.getElementById('sort').addEventListener('change', function(e) {
+      state.sort = e.target.value;
+      state.page = 1;
+      applyFilters();
+    });
+
+    priceRange.addEventListener('input', function(e) {
+      state.maxPrice = parseInt(e.target.value);
+      priceLabel.textContent = state.maxPrice >= maxPrice ? 'All prices' : 'Up to ' + formatPrice(state.maxPrice);
+      state.page = 1;
+      applyFilters();
+    });
+
+    pagination.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-page]');
+      if (btn) { state.page = parseInt(btn.dataset.page, 10); applyFilters(); }
+    });
+
+    applyFilters();
+  </script>
+</body>
+</html>
